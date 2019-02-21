@@ -1,7 +1,7 @@
 #include "Node.h"
-#include <math.h>
 #include "2048.h"
 #include <iostream>
+#include <cstdlib>
 
 #define BIAS 1
 
@@ -26,6 +26,7 @@ Node::Node (int move, int turn) {
 void Node::addChild(Node* newChild) {
 	children.push_back(newChild);
 	int index = rand()% remainingMoves.size();
+	
 	(*newChild).setMove(remainingMoves[index]);
 	remainingMoves.erase(remainingMoves.begin() + index);
 	freeTiles--;
