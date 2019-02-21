@@ -91,12 +91,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "572431760.1267509"
+            timestampString = "572442301.538584"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
             endingLineNumber = "118"
-            landmarkName = "Node::setBoard(int*** newBoard, int size)"
+            landmarkName = "Node::setSimulations(int simulations)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -140,13 +140,13 @@
             condition = "size &lt; 0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "572431760.1277421"
+            timestampString = "572442301.538947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
             endingLineNumber = "116"
-            landmarkName = "Node::setSimulations(int simulations)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -172,7 +172,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "572431760.128336"
+            timestampString = "572442301.539167"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "132"

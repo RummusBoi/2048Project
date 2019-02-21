@@ -2,6 +2,7 @@
 #include "2048.h"
 #include <iostream>
 #include <cstdlib>
+#include <math.h>
 
 #define BIAS 1
 
