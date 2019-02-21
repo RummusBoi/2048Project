@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../2048/2048.cpp">
+   </FileRef>
+   <FileRef
+      location = "group:../2048/2048.h">
+   </FileRef>
+   <FileRef
+      location = "group:../2048/AI.cpp">
+   </FileRef>
+   <FileRef
+      location = "group:../2048/AI.h">
+   </FileRef>
+   <FileRef
+      location = "group:../2048/Node.cpp">
+   </FileRef>
+   <FileRef
+      location = "group:../2048/Node.h">
+   </FileRef>
+   <FileRef
+      location = "self:2048.xcodeproj">
+   </FileRef>
+</Workspace>
