@@ -9,6 +9,7 @@ public:
 	static void setupBoard(int size, int*** board, int* score, int* freeTiles);
 	static void printBoard(int*** board, int size);
 
+	static int searchDepth;
 
 private:
 	int gameSize;

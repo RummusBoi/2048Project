@@ -51,16 +51,20 @@ int main () {
 		while (!gameLost) {
 			cout << "Starting round.." << endl;
 			int input;
+			Game2048::searchDepth = 0;
 			cout << "Generating move.." << endl;
 			input = ai.generateMove(&board);
-			cout << "Generated move" << endl;
-			Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 0);
+			cout << "Generated move. Max search depth was: " << Game2048::searchDepth << endl;
+			Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 1);
+			cout << "Executed move. Freetiles: " << freeTiles << endl;
 			if (freeTiles == 0) {
 				gameLost = true;
 				break;
 			}
+			cout << "Generating tile" << endl;
 			Game2048::generateRandomTile(&board, gameSize, &score, &freeTiles);
 			freeTiles -= 1;
+			cout << "printing board.. " << endl;
 			Game2048::printBoard(&board, gameSize);
 			//std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			

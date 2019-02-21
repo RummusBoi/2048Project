@@ -7,6 +7,8 @@
 #include <cmath>
 #include "2048.h"
 
+int Game2048::searchDepth = 0;
+
 using namespace std;
 
 Game2048::Game2048(int size) {
@@ -78,14 +80,19 @@ void Game2048::generateRandomTile(int*** board, int size, int* score, int* freeT
 	bool finished = false;
 
 	int n;
-
+	cout << "Starting board:" << endl;
+	Game2048::printBoard(board, size);
+	cin;
 	while (!finished) {
 		n = rand() % (size*size);
+		//cout << "x: " << n%4 << "y:" << (int)floor((double)n / 4.) << endl;
 		if ((*board)[n % 4][(int)floor((double)n / 4.)] == 0) {
 			(*board)[n % 4][(int)floor((double)n / 4.)] = rand() % 100 < 10 ? 4 : 2;
 			finished = true;
 		}
 	}
+	cout << "Ending board: " << endl;
+	Game2048::printBoard(board, size);
 
 	
 }
@@ -101,7 +108,7 @@ void Game2048::printBoard(int*** board, int size) {
 }
 
 void Game2048::executeMove(int*** board, int size, int move, int* score, int* freeTiles, int turn) {
-	if (turn % 2 == 0) {
+	if (turn % 2 == 1) {
 		switch (move)
 		{
 		case 1:

@@ -19,12 +19,12 @@ Node::Node (int move, int turn) {
 	score = 0;
 	(*this).move = move;
 	
-	std::cout << "hello everybdy" << std::endl;
-	
 	parent = NULL;
 	this->turn = turn;
 	remainingMoves = std::vector<int>();
 }
+
+using namespace std;
 
 void Node::addChild(Node* newChild) {
 	children.push_back(newChild);
@@ -36,7 +36,7 @@ void Node::addChild(Node* newChild) {
 	
 	newChild->setBoard(&board, size);
 	
-	newChild->setParent(this);
+	newChild->setParent(this, nodeDepth);
 
 	newChild->makeMove(size);
 	
@@ -46,19 +46,20 @@ void Node::addChild(Node* newChild) {
 	
 }
 
-void Node::rootSetupRemMoves() {
+void Node::rootSetupRemMoves() { 
 	for(int i = 1; i <= 4; i++) {
 		remainingMoves.push_back(i);
 	}
+	nodeDepth = 0;
 }
 
 void Node::generateRemainingMoves() {
 	//for now, adds all four moves if turn%2==0
 	if (turn%2==0){
-		remainingMoves.push_back(0);
 		remainingMoves.push_back(1);
 		remainingMoves.push_back(2);
 		remainingMoves.push_back(3);
+		remainingMoves.push_back(4);
 	}
 	freeTiles = size*size;
 	for (int i = 0; i < size; i++) {
@@ -105,8 +106,10 @@ void Node::setMove (int move) {
 	(*this).move = move;
 }
 
-void Node::setParent(Node* node) {
+void Node::setParent(Node* node, int parentNodeDepth) {
 	parent = node;
+	nodeDepth = parentNodeDepth + 1;
+	if (nodeDepth > Game2048::searchDepth) Game2048::searchDepth = nodeDepth;
 }
 
 Node* Node::getParent() {

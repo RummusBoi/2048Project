@@ -20,7 +20,7 @@ public:
 	int getScore();
 	void setScore (int score);
 	void setMove (int move);
-	void setParent(Node* node);
+	void setParent(Node* node, int parentNodeDepth);
 	void setSimulations(int simulations);
 	void setBoard (int*** newBoard, int size);
 	void makeMove (int size);
@@ -39,5 +39,6 @@ private:
 	int turn;
 	int score;
 	int freeTiles;
+	int nodeDepth;
 };
 #endif
