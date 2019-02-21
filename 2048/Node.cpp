@@ -30,7 +30,7 @@ void Node::addChild(Node* newChild) {
 	remainingMoves.erase(remainingMoves.begin() + index);
 	freeTiles--;
 	
-	std::cout << "hello guys" << std::endl;
+	std::cout << "hello guys" << std::endl;::::
 	newChild->setBoard(&board, size);
 	
 	newChild->setParent(this);
