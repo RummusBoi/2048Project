@@ -100,32 +100,40 @@ void Game2048::printBoard(int*** board, int size) {
 	cout << endl;
 }
 
-void Game2048::executeMove(int*** board, int size, int move, int* score, int* freeTiles) {
-	switch (move)
-	{
-	case 1:
-		rotateCW(board, size);
-		rotateCW(board, size);
-		moveLeft(board, size, score, freeTiles);
-		rotateCW(board, size);
-		rotateCW(board, size);
-		break;
-	case 2:
-		moveLeft(board, size, score, freeTiles);
-		break;
-	case 3:
-		rotateCCW(board, size);
-		moveLeft(board, size, score, freeTiles);
-		rotateCW(board, size);
-		break;
-	case 4:
-		rotateCW(board, size);
-		moveLeft(board, size, score, freeTiles);
-		rotateCCW(board, size);
-		break;
-	default:
-		cout << "invalid move: " << move << endl;
-		exit(1);
+void Game2048::executeMove(int*** board, int size, int move, int* score, int* freeTiles, int turn) {
+	if (turn % 2 == 0) {
+		switch (move)
+		{
+		case 1:
+			rotateCW(board, size);
+			rotateCW(board, size);
+			moveLeft(board, size, score, freeTiles);
+			rotateCW(board, size);
+			rotateCW(board, size);
+			break;
+		case 2:
+			moveLeft(board, size, score, freeTiles);
+			break;
+		case 3:
+			rotateCCW(board, size);
+			moveLeft(board, size, score, freeTiles);
+			rotateCW(board, size);
+			break;
+		case 4:
+			rotateCW(board, size);
+			moveLeft(board, size, score, freeTiles);
+			rotateCCW(board, size);
+			break;
+		default:
+			break;
+		}
+	}
+	else {
+		if (move < 0 || move >= 32) exit(19);
+
+		int tile = move < 16 ? 2 : 4;
+		move = move % 16;
+		(*board)[move % 4][int(floor(move / 4))] = tile;
 	}
 }
 

@@ -41,6 +41,9 @@ int AI::generateMove(int*** board) {
 		Node* newNode = new Node ((int)((player+1)%2));
 		
 		Node* selectedNode = nodeSelect(&root, player);
+		
+		if (selectedNode == NULL) return 0;
+
 		// ---
 		//expand selected node:
 		
@@ -73,7 +76,10 @@ int AI::generateMove(int*** board) {
 Node* AI::nodeSelect(Node* root, int player) {
 	std::vector<Node*> leafNodes;
 	(*root).collectLeafNodes(&leafNodes, player);
-
+	
+	if (leafNodes.size() == 0) {
+		return NULL;
+	}
 	double hiValD = (*leafNodes[0]).getSelectionValue();
 	int hiVal = 0;
 
@@ -81,6 +87,7 @@ Node* AI::nodeSelect(Node* root, int player) {
 	if (player == 0) {
 		for (int i = 0; i < leafNodes.size(); i++) {
 			if ((*leafNodes[i]).getSelectionValue() > hiValD) {
+
 				hiValD = (*leafNodes[i]).getSelectionValue();
 				hiVal = i;
 			}

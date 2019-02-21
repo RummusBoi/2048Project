@@ -12,7 +12,6 @@ Node::Node (int turn){
 	parent = NULL;
 	this->turn = turn;
 	remainingMoves = std::vector<int>();
-	std::cout << "bitch" << std::endl;
 }
 
 Node::Node (int move, int turn) {
@@ -35,13 +34,14 @@ void Node::addChild(Node* newChild) {
 	remainingMoves.erase(remainingMoves.begin() + index);
 	freeTiles--;
 	
-	std::cout << "hello guys" << std::endl;
 	newChild->setBoard(&board, size);
 	
 	newChild->setParent(this);
+
+	newChild->makeMove(size);
 	
 	//if turn of child is 1, finds the tiles where a random tile can be placed by game
-	//TODO set tilesLeft and set remainingmoves for turn=0 and turn=1
+	//TODO set tilesLeft and set remainingmoves for turn%2=0 and turn%2=1
 	newChild->generateRemainingMoves();
 	
 }
@@ -50,7 +50,6 @@ void Node::rootSetupRemMoves() {
 	for(int i = 1; i <= 4; i++) {
 		remainingMoves.push_back(i);
 	}
-	
 }
 
 void Node::generateRemainingMoves() {
@@ -64,10 +63,9 @@ void Node::generateRemainingMoves() {
 	freeTiles = size*size;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			if (board[i][j] != 0) {
+			if (board[i][j] == 0) {
 				freeTiles--;
 				if (turn%2 == 1) {
-					std::cout << i << " : " << j << " is not 0" << std::endl;
 					remainingMoves.push_back(i + 4 * j);
 					remainingMoves.push_back(i + 4 * j + 16);
 				}
@@ -147,11 +145,11 @@ void Node::printBoard(){
 }
 
 void Node::makeMove(int size) {
-	Game2048::executeMove(&board, size, move, &score, &freeTiles);
+	Game2048::executeMove(&board, size, move, &score, &freeTiles, turn);
 }
 
 void Node::collectLeafNodes(std::vector<Node*>* leafNodes, int turn) {
-	if (children.size() < (turn == 0 ? 4 : 32) && this->turn == turn) (*leafNodes).push_back(this);
+	if (remainingMoves.size() > 0 && this->turn == turn) (*leafNodes).push_back(&*this);
 	
 	for (Node* node : children) {
 		(*node).collectLeafNodes(leafNodes, turn);

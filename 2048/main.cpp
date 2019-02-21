@@ -1,8 +1,13 @@
 #include "2048.h"
 #include "AI.h"
 #include <iostream>
+#include <stdio.h>
 #include <cstdlib>
 #include <time.h>
+
+#ifdef _WIN64
+#define WINPAUSE system("pause")
+#endif
 
 using namespace std;
 
@@ -49,7 +54,7 @@ int main () {
 			cout << "Generating move.." << endl;
 			input = ai.generateMove(&board);
 			cout << "Generated move" << endl;
-			Game2048::executeMove(&board, gameSize, input, &score, &freeTiles);
+			Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 0);
 			if (freeTiles == 0) {
 				gameLost = true;
 				break;
@@ -69,7 +74,7 @@ int main () {
 		while (!gameLost) {
 			int input;
 			//Game2048::getMove(&input);
-			Game2048::executeMove(&board, gameSize, input, &score, &freeTiles);
+			Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 0);
 			if (freeTiles == 0) {
 				gameLost = true;
 				break;
@@ -81,6 +86,10 @@ int main () {
 	}
 	else { cout << "Invalid input." << endl; }
 	
+	std::cout << "finished" << std::endl;
 	
+	std::cin;
+
+
 	return 0;
 }
