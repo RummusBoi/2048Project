@@ -1,10 +1,14 @@
 #include "2048.h"
 #include "AI.h"
 #include <iostream>
+#include <cstdlib>
+#include <time.h>
 
 using namespace std;
 
 int main () {
+
+	
 	
 	int gameSize;
 	int** board;
@@ -33,9 +37,9 @@ int main () {
 	
 	cout << "Utilize AI? (Y/N)" << endl;
 	
-	std::string input;
+	std::string input = "y";
 	
-	cin >> input;
+	//cin >> input;
 	
 	if (input == "y") {
 		AI ai(gameSize);
