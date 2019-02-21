@@ -65,7 +65,7 @@ void Node::generateRemainingMoves() {
 			if (board[i][j] != 0) {
 				freeTiles--;
 				if (turn%2 == 1) {
-					std::cout << i + " : " + j + " is not 0" << std::endl;
+					std::cout << i << " : " << j << " is not 0" << std::endl;
 					remainingMoves.push_back(i + 4 * j);
 					remainingMoves.push_back(i + 4 * j + 16);
 				}
