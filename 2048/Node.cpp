@@ -18,6 +18,8 @@ Node::Node (int move, int turn) {
 	score = 0;
 	(*this).move = move;
 	
+	std::cout << "hello everybdy" << std::endl;
+	
 	parent = NULL;
 	this->turn = turn;
 	remainingMoves = std::vector<int>();
