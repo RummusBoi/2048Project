@@ -12,6 +12,7 @@ Node::Node (int turn){
 	parent = NULL;
 	this->turn = turn;
 	remainingMoves = std::vector<int>();
+	std::cout << "bitch" << std::endl;
 }
 
 Node::Node (int move, int turn) {
