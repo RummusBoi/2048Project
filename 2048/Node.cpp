@@ -32,11 +32,12 @@ void Node::addChild(Node* newChild) {
 	
 	(*newChild).setMove(remainingMoves[index]);
 	remainingMoves.erase(remainingMoves.begin() + index);
-	freeTiles--;
 	
 	newChild->setBoard(&board, size);
 	
 	newChild->setParent(this, nodeDepth);
+	
+	newChild->setFreeTiles (freeTiles);
 
 	newChild->makeMove(size);
 	
@@ -47,10 +48,57 @@ void Node::addChild(Node* newChild) {
 }
 
 void Node::rootSetupRemMoves() { 
-	for(int i = 1; i <= 4; i++) {
-		remainingMoves.push_back(i);
+	int** cmpBoard = new int* [size];
+	for (int i = 0; i < size; i ++) {
+		cmpBoard[i] = new int[size];
+	}
+	
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			cmpBoard[i][j] = board[i][j];
+		}
+	}
+	
+	int freeTiles = 16;
+	int score = 0;
+	
+	for (int move = 1; move <= 4; move ++) {
+		Game2048::executeMove(&cmpBoard, 4, move, &score, &freeTiles, 1);
+		if (!cmpBoards(&cmpBoard, &board, size)) {
+			cout << "added " << move << endl;
+			remainingMoves.push_back(move);
+		}
+		int reverseMove;
+		switch (move) {
+			case 1:
+				reverseMove = 2;
+				break;
+			case 2:
+				reverseMove = 1;
+				break;
+			case 3:
+				reverseMove = 4;
+				break;
+			case 4:
+				reverseMove = 3;
+				break;
+			default:
+				cout << "invalid move in Node.cpp" << endl;
+				exit(7);
+		}
 	}
 	nodeDepth = 0;
+}
+
+bool Node::cmpBoards(int*** board1, int ***board2, int size) {
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if ((*board1)[i][j] != (*board2)[i][j]){
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 void Node::generateRemainingMoves() {
@@ -65,11 +113,13 @@ void Node::generateRemainingMoves() {
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			if (board[i][j] == 0) {
-				freeTiles--;
+				
 				if (turn%2 == 1) {
 					remainingMoves.push_back(i + 4 * j);
 					remainingMoves.push_back(i + 4 * j + 16);
 				}
+			} else {
+				freeTiles--;
 			}
 		}
 	}
@@ -85,6 +135,11 @@ Node* Node::getChild(int index) {
 std::vector<Node*>* Node::getChildren() {
 	return &children;
 }
+
+std::vector<int>* Node::getRemainingMoves(){
+	return &remainingMoves;
+}
+
 
 void Node::setScore(int newScore) {
 	score = newScore;
@@ -114,6 +169,10 @@ void Node::setParent(Node* node, int parentNodeDepth) {
 
 Node* Node::getParent() {
 	return parent;
+}
+
+void Node::setFreeTiles(int freeTiles) {
+	this->freeTiles = freeTiles;
 }
 
 void Node::setSimulations(int simulations) {

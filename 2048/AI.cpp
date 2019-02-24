@@ -8,34 +8,27 @@ AI::AI(int size) {
 	this->size = size;
 }
 
-int AI::generateMove(int*** board) {
+int AI::generateMove(int*** board, int freeTiles) {
 	Node root(0);
 	root.setBoard(board, size);
 	root.rootSetupRemMoves();
-	cout << "printing root board.." << endl;
-	root.printBoard();
 	cout << "printing original board.. " << endl;
 	Game2048::printBoard(board, size);
 	//Create 4 children for the root:
-	for (int i = 0; i < 4; i++) {
+	int startingMoves = (int)root.getRemainingMoves()->size();
+	for (int i = 0; i < startingMoves; i++) {
 		Node* newNode = new Node (1);
 		root.addChild(newNode);
 		
 		newNode->makeMove(size);
-		cout << "child " << i << endl << endl;
-		newNode->printBoard();
 		
 		
 		nodeBackpropagate(newNode, nodeSimulate(newNode), 0);
 	}
 	
-	
-	
-	cout << "finished setup" << endl;
-	
 	cout << "creating tree" << endl;
 	//first turn is given to computer, as the ai already has created 4 nodes.
-	for (int step = 1; step < 1600; step++) {
+	for (int step = 1; step < 10; step++) {
 		int player = step % 2;
 		Node* newNode = new Node ((int)((player+1)%2));
 		
@@ -53,6 +46,8 @@ int AI::generateMove(int*** board) {
 		//backpropagate outcome through tree
 		if (player == 1) outcome = 0;
 		nodeBackpropagate(newNode, outcome, player);
+		
+		cin;
 	}
 	
 	Node hiVal = *(root.getChild(0));

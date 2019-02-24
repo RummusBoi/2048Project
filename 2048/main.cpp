@@ -53,7 +53,7 @@ int main () {
 			int input;
 			Game2048::searchDepth = 0;
 			cout << "Generating move.." << endl;
-			input = ai.generateMove(&board);
+			input = ai.generateMove(&board, freeTiles);
 			cout << "Generated move. Max search depth was: " << Game2048::searchDepth << endl;
 			Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 1);
 			cout << "Executed move. Freetiles: " << freeTiles << endl;
@@ -91,9 +91,6 @@ int main () {
 	else { cout << "Invalid input." << endl; }
 	
 	std::cout << "finished" << std::endl;
-	
-	std::cin;
-
 
 	return 0;
 }
