@@ -29,7 +29,6 @@ public:
 	void printBoard ();
 	void generateRemainingMoves();
 	void rootSetupRemMoves ();
-	int nodeSimulate();
 private:
 	std::vector<Node*> children;
 	std::vector<int> remainingMoves;

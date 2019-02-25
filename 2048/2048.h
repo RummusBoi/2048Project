@@ -1,6 +1,5 @@
 #ifndef GAMEHPP
 #define GAMEHPP
-#include <vector>
 
 class Game2048 {
 public:
@@ -9,7 +8,6 @@ public:
 	static void executeMove(int*** board, int size, int move, int* score, int* freeTiles, int turn);
 	static void setupBoard(int size, int*** board, int* score, int* freeTiles);
 	static void printBoard(int*** board, int size);
-	static void generateRemainingMovesFromBoard(int*** board, int size, int turn, int* freeTiles, std::vector<int>* remainingMoves);
 
 	static int searchDepth;
 
