@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <math.h>
 
-#define BIAS 1
+#define BIAS 1.4
 
 Node::Node (int turn){
 	simulations = 0;
@@ -55,7 +55,7 @@ void Node::rootSetupRemMoves() {
 
 void Node::generateRemainingMoves() {
 	//for now, adds all four moves if turn%2==0
-	if (turn%2==0){
+	/*if (turn%2==0){
 		remainingMoves.push_back(1);
 		remainingMoves.push_back(2);
 		remainingMoves.push_back(3);
@@ -72,10 +72,52 @@ void Node::generateRemainingMoves() {
 				}
 			}
 		}
+	}*/
+
+	//testing call to Game2048:
+	Game2048::generateRemainingMovesFromBoard((&board), size, turn, &freeTiles, (&remainingMoves));
+
+}
+
+//new implementation of nodesimulate may not work. Changed the location of nodeSimulate from AI.cpp to Node.cpp. 
+
+int Node::nodeSimulate() {
+	int outcome = rand() % 100;
+	int** simBoard = new int*[size];
+	for (int i = 0; i < size; i++) {
+		simBoard[i] = new int[size];
+		for (int j = 0; j < size; j++) {
+			simBoard[i][j] = board[i][j];
+		}
 	}
 
+	int tmpTurn = (turn+1)%2;
+	int tmpScore = 0;
+	int tmpFreeTiles = freeTiles;
+
+	bool done = false;
+
+	//turn 1 is ai
+	//turn 0 is computer
+
+	vector<int> tmpRemainingMoves = vector<int>();
 	
-	
+	while (!done) {
+
+		/*cout << tmpFreeTiles << endl;
+		cout << "score: " << tmpScore << endl;
+		cout << "current board:" << endl;
+		Game2048::printBoard(&simBoard, size);
+		*/
+		if (tmpTurn % 2 == 1 && tmpFreeTiles == 0) {done = true; break;}
+		Game2048::generateRemainingMovesFromBoard(&simBoard, size, tmpTurn, &tmpFreeTiles, &tmpRemainingMoves);
+		int simMove = tmpRemainingMoves[rand() % tmpRemainingMoves.size()];
+		Game2048::executeMove(&simBoard, size, simMove, &tmpScore, &tmpFreeTiles, (tmpTurn+1)%2);
+
+		tmpTurn++;
+	}
+
+	return tmpScore;
 }
 
 Node* Node::getChild(int index) {

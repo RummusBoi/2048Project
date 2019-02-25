@@ -12,21 +12,15 @@ int AI::generateMove(int*** board) {
 	Node root(0);
 	root.setBoard(board, size);
 	root.rootSetupRemMoves();
-	cout << "printing root board.." << endl;
-	root.printBoard();
-	cout << "printing original board.. " << endl;
-	Game2048::printBoard(board, size);
 	//Create 4 children for the root:
 	for (int i = 0; i < 4; i++) {
 		Node* newNode = new Node (1);
 		root.addChild(newNode);
 		
 		newNode->makeMove(size);
-		cout << "child " << i << endl << endl;
-		newNode->printBoard();
 		
 		
-		nodeBackpropagate(newNode, nodeSimulate(newNode), 0);
+		nodeBackpropagate(newNode, newNode->nodeSimulate(), 0);
 	}
 	
 	
@@ -35,39 +29,50 @@ int AI::generateMove(int*** board) {
 	
 	cout << "creating tree" << endl;
 	//first turn is given to computer, as the ai already has created 4 nodes.
-	for (int step = 1; step < 1600; step++) {
+	for (int step = 1; step < 100; step++) {
 		int player = step % 2;
-		Node* newNode = new Node ((int)((player+1)%2));
-		
-		Node* selectedNode = nodeSelect(&root, player);
-		
-		if (selectedNode == NULL) return 0;
+		for (int i = 0; i < (player == 1 ? 4 : 1); i++) {
+			Node* newNode = new Node((int)((player + 1) % 2));
 
-		// ---
-		//expand selected node:
+			Node* selectedNode = nodeSelect(&root, player);
+
+			if (selectedNode == NULL) return 0;
+
+			// ---
+			//expand selected node:
+
+			(*selectedNode).addChild(newNode);
+			// ---
+			//simulate game from newNode:
+			int outcome = newNode->nodeSimulate();
+			//backpropagate outcome through tree
+			nodeBackpropagate(newNode, outcome, player);
+		}
 		
-		(*selectedNode).addChild(newNode);
-		// ---
-		//simulate game from newNode:
-		int outcome = nodeSimulate(newNode);
-		//backpropagate outcome through tree
-		if (player == 1) outcome = 0;
-		nodeBackpropagate(newNode, outcome, player);
 	}
 	
 	Node hiVal = *(root.getChild(0));
-	int hiSim = hiVal.getSimulations();
+	double hiScore = hiVal.getSimulations();
 
-	cout << "Finding move with highest amount of simulations.. " << endl;
+	cout << "Finding move with highest amount of simulations.. " << endl << endl;
+	cout << "Confidence: " << endl;
 	
+	int totalScore = 0;
+
 	for (Node* node : *(root.getChildren())) {
-		if ((*node).getSimulations() > hiSim) {
+		totalScore += double((*node).getScore()) / double((*node).getSimulations());
+		
+		if (double((*node).getScore()) / double((*node).getSimulations()) > hiScore) {
 			hiVal = (*node);
-			hiSim = hiVal.getSimulations();
+			hiScore = double((*node).getScore()) / double((*node).getSimulations());
 		}
 	}
-	
-	cout << "Returning move.. " << endl;
+
+	for (Node* node : *(root.getChildren())) {
+		cout << 100. * double((*node).getScore()) / double((*node).getSimulations()) / double(totalScore) << endl;
+	}
+
+	cout << endl << "Returning " << hiVal.getMove() << endl;
 	
 	return hiVal.getMove();
 }
@@ -93,27 +98,28 @@ Node* AI::nodeSelect(Node* root, int player) {
 		}
 	}
 	
-	//if player is computer, pick the node with the lowest selection value
+	//if player is computer, pick the node with the lowest selection value -- NOTE: changed to random node instead.
 	if (player == 1) {
+		/*
 		for (int i = 0; i < leafNodes.size(); i++) {
 			if ((*leafNodes[i]).getSelectionValue() < hiValD) {
 				hiValD = (*leafNodes[i]).getSelectionValue();
 				hiVal = i;
 			}
 		}
+		*/
+		hiVal = rand() % (leafNodes).size();
+		//cout << "selected " << hiVal << endl;
 	}
+	
 	return leafNodes[hiVal];
+	
 }
 
 void AI::nodeExpand(Node* node) {
 	Node newNode (rand() % 4);
 	(*node).addChild(&newNode);
-	nodeSimulate(&newNode);
-}
-
-int AI::nodeSimulate(Node* node) {
-	int outcome = rand() % 100;
-	return outcome;
+	newNode.nodeSimulate();
 }
 
 void AI::nodeBackpropagate(Node* node, int outcome, int player) {

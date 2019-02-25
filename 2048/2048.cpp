@@ -107,6 +107,28 @@ void Game2048::printBoard(int*** board, int size) {
 	cout << endl;
 }
 
+void Game2048::generateRemainingMovesFromBoard(int*** board, int size, int turn, int* freeTiles, std::vector<int>* remainingMoves) {
+	(*remainingMoves).clear();
+	if (turn % 2 == 0) {
+		(*remainingMoves).push_back(1);
+		(*remainingMoves).push_back(2);
+		(*remainingMoves).push_back(3);
+		(*remainingMoves).push_back(4);
+	}
+	(*freeTiles) = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if ((*board)[i][j] == 0) {
+				(*freeTiles)++;
+				if (turn % 2 == 1) {
+					(*remainingMoves).push_back(i + 4 * j);
+					(*remainingMoves).push_back(i + 4 * j + 16);
+				}
+			}
+		}
+	}
+}
+
 void Game2048::executeMove(int*** board, int size, int move, int* score, int* freeTiles, int turn) {
 	if (turn % 2 == 1) {
 		switch (move)
