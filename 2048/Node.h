@@ -10,7 +10,7 @@ public:
 	Node* getParent();
 	Node* getChild(int index);
 	std::vector<Node*>* getChildren();
-	std::vector<int> getRemainingMoves ();
+	std::vector<int>* getRemainingMoves ();
 	void addChild(Node* newChild);
 	double getSelectionValue();
 	void collectLeafNodes(std::vector<Node*>* leafNodes, int turn);
@@ -23,6 +23,7 @@ public:
 	void setParent(Node* node, int parentNodeDepth);
 	void setSimulations(int simulations);
 	void setBoard (int*** newBoard, int size);
+	void setFreeTiles (int freeTiles);
 	void makeMove (int size);
 	void generateRandomTile ();
 	void printBoard ();
@@ -41,5 +42,6 @@ private:
 	int score;
 	int freeTiles;
 	int nodeDepth;
+	bool cmpBoards (int*** board1, int*** board2, int size);
 };
 #endif

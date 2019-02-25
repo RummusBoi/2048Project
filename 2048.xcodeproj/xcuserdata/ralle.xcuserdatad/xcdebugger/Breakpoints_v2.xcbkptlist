@@ -10,29 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "572431760.126229"
+            timestampString = "572532572.808587"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "AI::generateMove(int*** board)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            condition = "step==10"
-            continueAfterRunningActions = "No"
-            filePath = "2048/AI.cpp"
-            timestampString = "572431760.126464"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "AI::generateMove(int*** board)"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "AI::generateMove(int*** board, int freeTiles)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -43,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "572431760.126608"
+            timestampString = "572532572.80905"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "AI::generateMove(int*** board)"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "AI::generateMove(int*** board, int freeTiles)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -91,60 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "572442301.538584"
+            timestampString = "572532572.809461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "Node::setSimulations(int simulations)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "2048/AI.cpp"
-            timestampString = "572431760.127463"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "AI::generateMove(int*** board)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "2048/AI.cpp"
-            timestampString = "572431760.127618"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "AI::generateMove(int*** board)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            condition = "size &lt; 0"
-            continueAfterRunningActions = "No"
-            filePath = "2048/Node.cpp"
-            timestampString = "572442301.538947"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -156,12 +90,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "572431760.128225"
+            timestampString = "572532572.809559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "AI::generateMove(int*** board)"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "AI::generateMove(int*** board, int freeTiles)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "2048/AI.cpp"
+            timestampString = "572532572.809967"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "AI::generateMove(int*** board, int freeTiles)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            condition = "size &lt; 0"
+            continueAfterRunningActions = "No"
+            filePath = "2048/Node.cpp"
+            timestampString = "572532572.8103859"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "Node::getParent()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -172,12 +139,63 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "572442301.539167"
+            timestampString = "572532572.8104891"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
             landmarkName = "Node::setBoard(int*** newBoard, int size)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            condition = "step%5==0"
+            continueAfterRunningActions = "No"
+            filePath = "2048/AI.cpp"
+            timestampString = "572532572.8105839"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "AI::generateMove(int*** board, int freeTiles)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            condition = "step==9"
+            continueAfterRunningActions = "No"
+            filePath = "2048/AI.cpp"
+            timestampString = "572532572.810994"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "AI::generateMove(int*** board, int freeTiles)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            condition = "step==5"
+            continueAfterRunningActions = "No"
+            filePath = "2048/AI.cpp"
+            timestampString = "572532572.811289"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "AI::generateMove(int*** board, int freeTiles)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -4,7 +4,7 @@
 class AI {
 public:
 	AI(int size);
-	int generateMove(int*** board);
+	int generateMove(int*** board, int freeTiles);
 private:
 	void constructTree(Node* root);
 	int size;

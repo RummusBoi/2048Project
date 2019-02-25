@@ -80,9 +80,6 @@ void Game2048::generateRandomTile(int*** board, int size, int* score, int* freeT
 	bool finished = false;
 
 	int n;
-	cout << "Starting board:" << endl;
-	Game2048::printBoard(board, size);
-	cin;
 	while (!finished) {
 		n = rand() % (size*size);
 		//cout << "x: " << n%4 << "y:" << (int)floor((double)n / 4.) << endl;
@@ -91,8 +88,6 @@ void Game2048::generateRandomTile(int*** board, int size, int* score, int* freeT
 			finished = true;
 		}
 	}
-	cout << "Ending board: " << endl;
-	Game2048::printBoard(board, size);
 
 	
 }
@@ -163,6 +158,7 @@ void Game2048::executeMove(int*** board, int size, int move, int* score, int* fr
 		int tile = move < 16 ? 2 : 4;
 		move = move % 16;
 		(*board)[move % 4][int(floor(move / 4))] = tile;
+		(*freeTiles) -= 1;
 	}
 }
 
