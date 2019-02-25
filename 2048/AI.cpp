@@ -20,7 +20,6 @@ int AI::generateMove(int*** board) {
 	for (int i = 0; i < 4; i++) {
 		Node* newNode = new Node (1);
 		root.addChild(newNode);
-		newNode->setParent(&root);
 		
 		newNode->makeMove(size);
 		cout << "child " << i << endl << endl;
@@ -36,11 +35,14 @@ int AI::generateMove(int*** board) {
 	
 	cout << "creating tree" << endl;
 	//first turn is given to computer, as the ai already has created 4 nodes.
-	for (int step = 1; step < 200; step++) {
+	for (int step = 1; step < 1600; step++) {
 		int player = step % 2;
 		Node* newNode = new Node ((int)((player+1)%2));
 		
 		Node* selectedNode = nodeSelect(&root, player);
+		
+		if (selectedNode == NULL) return 0;
+
 		// ---
 		//expand selected node:
 		
@@ -66,14 +68,17 @@ int AI::generateMove(int*** board) {
 	}
 	
 	cout << "Returning move.. " << endl;
-
+	
 	return hiVal.getMove();
 }
 
 Node* AI::nodeSelect(Node* root, int player) {
 	std::vector<Node*> leafNodes;
 	(*root).collectLeafNodes(&leafNodes, player);
-
+	
+	if (leafNodes.size() == 0) {
+		return NULL;
+	}
 	double hiValD = (*leafNodes[0]).getSelectionValue();
 	int hiVal = 0;
 
@@ -81,6 +86,7 @@ Node* AI::nodeSelect(Node* root, int player) {
 	if (player == 0) {
 		for (int i = 0; i < leafNodes.size(); i++) {
 			if ((*leafNodes[i]).getSelectionValue() > hiValD) {
+
 				hiValD = (*leafNodes[i]).getSelectionValue();
 				hiVal = i;
 			}
