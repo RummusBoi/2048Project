@@ -18,6 +18,8 @@ public:
 	int getMove();
 	int getTurn();
 	int getScore();
+	int getAccScore();
+	int getNodeDepth();
 	void setScore (int score);
 	void setMove (int move);
 	void setParent(Node* node, int parentNodeDepth);
@@ -30,6 +32,8 @@ public:
 	void generateRemainingMoves();
 	void rootSetupRemMoves ();
 	int nodeSimulate();
+	void setAccScore(int newScore);
+	
 private:
 	std::vector<Node*> children;
 	std::vector<int> remainingMoves;
@@ -39,7 +43,8 @@ private:
 	int** board;
 	int size;
 	int turn;
-	int score;
+	int baseScore;
+	int accScore;
 	int freeTiles;
 	int nodeDepth;
 	bool cmpBoards (int*** board1, int*** board2, int size);

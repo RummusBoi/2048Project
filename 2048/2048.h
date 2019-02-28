@@ -12,16 +12,19 @@ public:
 	static void generateRemainingMovesFromBoard(int*** board, int size, int turn, int* freeTiles, std::vector<int>* remainingMoves);
 
 	static int searchDepth;
+	static char charFromMove(int move);
+
+
+	static void getMove(int* move);
 
 private:
 	int gameSize;
 	int** board;
-	bool lkey;
-	bool rkey;
-	bool ukey;
-	bool dkey;
+	static bool lkey;
+	static bool rkey;
+	static bool ukey;
+	static bool dkey;
 	bool gameLost;
-	void getMove(int* move);
 	
 	static void moveLeft(int*** board, int size, int* score, int* freeTiles);
 	static void rotateCW(int*** board, int size);

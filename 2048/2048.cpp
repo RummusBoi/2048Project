@@ -6,17 +6,24 @@
 #include <string>
 #include <cmath>
 #include "2048.h"
+#include <Windows.h>
 
 int Game2048::searchDepth = 0;
+bool Game2048::lkey = false;
+bool Game2048::rkey = false;
+bool Game2048::ukey = false;
+bool Game2048::dkey = false;
+
 
 using namespace std;
 
 Game2048::Game2048(int size) {
 }
 
-/*
+
 void Game2048::getMove(int* move) {
 	bool foundkey = false;
+
 	while (foundkey == false) {
 		
 		if (GetKeyState(VK_RIGHT) & 0x8000) {
@@ -56,10 +63,20 @@ void Game2048::getMove(int* move) {
 		else ukey = false;
 	}
 }
-*/
 
-void Game2048::getMove(int *move) {
-	(*move) = 1;
+char Game2048::charFromMove(int move) {
+	switch (move) {
+		case 1:
+			return 'r';
+		case 2: 
+			return 'l';
+		case 3:
+			return 'd';
+		case 4:
+			return 'u';
+		default:
+			exit(20);
+	}
 }
 
 void Game2048::setupBoard(int size, int*** board, int* score, int* freeTiles) {

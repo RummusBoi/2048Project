@@ -8,7 +8,8 @@
 
 Node::Node (int turn){
 	simulations = 0;
-	score = 0;
+	baseScore = 0;
+	accScore = 0;
 	parent = NULL;
 	this->turn = turn;
 	remainingMoves = std::vector<int>();
@@ -16,7 +17,8 @@ Node::Node (int turn){
 
 Node::Node (int move, int turn) {
 	simulations = 0;
-	score = 0;
+	baseScore = 0;
+	accScore = 0;
 	(*this).move = move;
 	
 	parent = NULL;
@@ -32,6 +34,7 @@ void Node::addChild(Node* newChild) {
 	
 	(*newChild).setMove(remainingMoves[index]);
 	remainingMoves.erase(remainingMoves.begin() + index);
+	(*newChild).setScore(baseScore);
 	
 	newChild->setBoard(&board, size);
 	
@@ -40,6 +43,7 @@ void Node::addChild(Node* newChild) {
 	newChild->setFreeTiles (freeTiles);
 
 	newChild->makeMove(size);
+	newChild->setAccScore(newChild->baseScore);
 	
 	//if turn of child is 1, finds the tiles where a random tile can be placed by game
 	//TODO set tilesLeft and set remainingmoves for turn%2=0 and turn%2=1
@@ -59,6 +63,9 @@ void Node::rootSetupRemMoves() {
 		}
 	}
 	
+	cout << "Before: " << endl;
+	printBoard();
+
 	int freeTiles = 16;
 	int score = 0;
 	
@@ -67,27 +74,18 @@ void Node::rootSetupRemMoves() {
 		if (!cmpBoards(&cmpBoard, &board, size)) {
 			remainingMoves.push_back(move);
 		}
-		int reverseMove;
-		switch (move) {
-			case 1:
-				reverseMove = 2;
-				break;
-			case 2:
-				reverseMove = 1;
-				break;
-			case 3:
-				reverseMove = 4;
-				break;
-			case 4:
-				reverseMove = 3;
-				break;
-			default:
-				cout << "invalid move in Node.cpp" << endl;
-				exit(7);
+
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				cmpBoard[i][j] = board[i][j];
+			}
 		}
 		
-		Game2048::executeMove(&cmpBoard, 4, reverseMove, &score, &freeTiles, 1);
+		
 	}
+	cout << "After: " << endl;
+	printBoard();
+
 	nodeDepth = 0;
 }
 
@@ -103,37 +101,12 @@ bool Node::cmpBoards(int*** board1, int ***board2, int size) {
 }
 
 void Node::generateRemainingMoves() {
-	//for now, adds all four moves if turn%2==0
-	/*if (turn%2==0){
-		remainingMoves.push_back(1);
-		remainingMoves.push_back(2);
-		remainingMoves.push_back(3);
-		remainingMoves.push_back(4);
-	}
-	freeTiles = size*size;
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			if (board[i][j] == 0) {
-				
-				if (turn%2 == 1) {
-					remainingMoves.push_back(i + 4 * j);
-					remainingMoves.push_back(i + 4 * j + 16);
-				}
-			} else {
-				freeTiles--;
-			}
-		}
-	}*/
-
-	//testing call to Game2048:
 	Game2048::generateRemainingMovesFromBoard((&board), size, turn, &freeTiles, (&remainingMoves));
-
 }
 
 //new implementation of nodesimulate may not work. Changed the location of nodeSimulate from AI.cpp to Node.cpp. 
 
 int Node::nodeSimulate() {
-	int outcome = rand() % 100;
 	int** simBoard = new int*[size];
 	for (int i = 0; i < size; i++) {
 		simBoard[i] = new int[size];
@@ -168,7 +141,11 @@ int Node::nodeSimulate() {
 		tmpTurn++;
 	}
 
-	return tmpScore;
+	return tmpScore + baseScore;
+}
+
+int Node::getNodeDepth() {
+	return nodeDepth;
 }
 
 Node* Node::getChild(int index) {
@@ -185,7 +162,7 @@ std::vector<int>* Node::getRemainingMoves(){
 
 
 void Node::setScore(int newScore) {
-	score = newScore;
+	baseScore = newScore;
 }
 
 int Node::getMove() {
@@ -197,7 +174,15 @@ int Node::getTurn() {
 }
 
 int Node::getScore() {
-	return score;
+	return baseScore;
+}
+
+int Node::getAccScore() {
+	return accScore;
+}
+
+void Node::setAccScore(int newScore) {
+	accScore = newScore;
 }
 
 void Node::setMove (int move) {
@@ -250,7 +235,7 @@ void Node::printBoard(){
 }
 
 void Node::makeMove(int size) {
-	Game2048::executeMove(&board, size, move, &score, &freeTiles, turn);
+	Game2048::executeMove(&board, size, move, &baseScore, &freeTiles, turn);
 }
 
 void Node::collectLeafNodes(std::vector<Node*>* leafNodes, int turn) {
@@ -267,5 +252,5 @@ int Node::getSimulations() {
 
 double Node::getSelectionValue() {
 	if (simulations == 0) return 0;
-	return (double)score / (double)simulations + BIAS * sqrt(log(parent->getSimulations()) / simulations);
+	return (double)accScore / (double)simulations + BIAS * sqrt(log((double)parent->getSimulations()) / (double)simulations);
 }

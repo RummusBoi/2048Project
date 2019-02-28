@@ -17,10 +17,6 @@ int main () {
 	
 	int gameSize;
 	int** board;
-	bool lkey;
-	bool rkey;
-	bool ukey;
-	bool dkey;
 	bool gameLost;
 	void getMove(int* move);
 	
@@ -33,11 +29,6 @@ int main () {
 	int iterations = 2;
 	
 	for (int i = 0; i < iterations; i++) {
-		
-		ukey = false;
-		dkey = false;
-		rkey = false;
-		lkey = false;
 		gameLost = false;
 		
 		int score = 0;
@@ -62,28 +53,26 @@ int main () {
 				}
 				Game2048::generateRandomTile(&board, gameSize, &score, &freeTiles);
 				freeTiles -= 1;
-				Game2048::printBoard(&board, gameSize);
-				//std::this_thread::sleep_for(std::chrono::milliseconds(500));
 				
 			}
 			totalScore += score;
 		}
 		else if (input == "n") {
-			exit(1);
 			
 			Game2048::printBoard(&board, gameSize);
 			
 			while (!gameLost) {
 				int input;
-				//Game2048::getMove(&input);
-				Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 0);
+				Game2048::getMove(&input);
+				Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 1);
 				if (freeTiles == 0) {
 					gameLost = true;
 					break;
 				}
 				Game2048::generateRandomTile(&board, gameSize, &score, &freeTiles);
 				freeTiles -= 1;
-				//Game2048::printBoard(&board, gameSize);
+				Game2048::printBoard(&board, gameSize);
+				cout << "Score: " << score << endl;
 			}
 		}
 	}
