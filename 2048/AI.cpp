@@ -8,12 +8,15 @@ AI::AI(int size) {
 	this->size = size;
 }
 
-int AI::generateMove(int*** board) {
+int AI::generateMove(int*** board, int freeTiles) {
 	Node root(0);
 	root.setBoard(board, size);
 	root.rootSetupRemMoves();
+	
+	root.printBoard();
 	//Create 4 children for the root:
-	for (int i = 0; i < 4; i++) {
+	int remSize = (int)root.getRemainingMoves()->size();
+	for (int i = 0; i < remSize; i++) {
 		Node* newNode = new Node (1);
 		root.addChild(newNode);
 		
@@ -22,16 +25,10 @@ int AI::generateMove(int*** board) {
 		
 		nodeBackpropagate(newNode, newNode->nodeSimulate(), 0);
 	}
-	
-	
-	
-	cout << "finished setup" << endl;
-	
-	cout << "creating tree" << endl;
 	//first turn is given to computer, as the ai already has created 4 nodes.
 	for (int step = 1; step < 100; step++) {
 		int player = step % 2;
-		for (int i = 0; i < (player == 1 ? 4 : 1); i++) {
+		for (int i = 0; i < (player == 1 ? 2 : 1); i++) {
 			Node* newNode = new Node((int)((player + 1) % 2));
 
 			Node* selectedNode = nodeSelect(&root, player);
@@ -54,8 +51,7 @@ int AI::generateMove(int*** board) {
 	Node hiVal = *(root.getChild(0));
 	double hiScore = hiVal.getSimulations();
 
-	cout << "Finding move with highest amount of simulations.. " << endl << endl;
-	cout << "Confidence: " << endl;
+	//cout << "Confidence: " << endl;
 	
 	int totalScore = 0;
 
@@ -68,11 +64,10 @@ int AI::generateMove(int*** board) {
 		}
 	}
 
-	for (Node* node : *(root.getChildren())) {
-		cout << 100. * double((*node).getScore()) / double((*node).getSimulations()) / double(totalScore) << endl;
-	}
+	//for (Node* node : *(root.getChildren())) {
+	//	cout << 100. * double((*node).getScore()) / double((*node).getSimulations()) / double(totalScore) << endl;
+	//}
 
-	cout << endl << "Returning " << hiVal.getMove() << endl;
 	
 	return hiVal.getMove();
 }

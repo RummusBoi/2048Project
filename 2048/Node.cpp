@@ -63,9 +63,8 @@ void Node::rootSetupRemMoves() {
 	int score = 0;
 	
 	for (int move = 1; move <= 4; move ++) {
-		Game2048::executeMove(&cmpBoard, 4, move, &score, &freeTiles, 1);
+		Game2048::executeMove(&cmpBoard, size, move, &score, &freeTiles, 1);
 		if (!cmpBoards(&cmpBoard, &board, size)) {
-			cout << "added " << move << endl;
 			remainingMoves.push_back(move);
 		}
 		int reverseMove;
@@ -86,6 +85,8 @@ void Node::rootSetupRemMoves() {
 				cout << "invalid move in Node.cpp" << endl;
 				exit(7);
 		}
+		
+		Game2048::executeMove(&cmpBoard, 4, reverseMove, &score, &freeTiles, 1);
 	}
 	nodeDepth = 0;
 }
