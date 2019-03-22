@@ -47,7 +47,7 @@ void Game2048::getMove(int* move) {
 		}
 		else lkey = false;
 
-		if (GetKeyState(VK_DOWN) & 0x8000) {
+		if (GetKeyState(VK_UP) & 0x8000) {
 			if (!dkey) {
 				*move = 3;
 				foundkey = true;
@@ -56,7 +56,7 @@ void Game2048::getMove(int* move) {
 		}
 		else dkey = false;
 
-		if (GetKeyState(VK_UP) & 0x8000) {
+		if (GetKeyState(VK_DOWN) & 0x8000) {
 			if (!ukey) {
 				*move = 4;
 				foundkey = true;
@@ -77,9 +77,9 @@ char Game2048::charFromMove(int move) {
 		case 2: 
 			return 'l';
 		case 3:
-			return 'd';
-		case 4:
 			return 'u';
+		case 4:
+			return 'd';
 		default:
 			exit(-1);
 	}
@@ -193,33 +193,9 @@ void Game2048::moveLeft(int*** board, int size, int* score, int* freeTiles) {
 				else if (index != j) {
 					(*board)[i][index] = (*board)[i][j];
 					(*board)[i][j] = 0;
-					
+
 				}
 				index++;
-			}
-		}
-	}
-}
-
-void Game2048::moveRight(int*** board, int size, int *score, int *freeTiles) {
-	int index;
-	for (int i = size - 1; i >= 0; i--) {
-		index = size - 1;
-		for (int j = size - 1; j >= 0; j--) {
-			if ((*board)[i][j] != 0) {
-				if (index + 1 >= 0 && (*board)[i][j] == (*board)[i][index + 1]) {
-					*score = *score + (*board)[i][index + 1] * 2;
-					(*board)[i][index + 1] *= 2;
-					(*board)[i][j] = 0;
-					(*freeTiles)++;
-					index++;
-				}
-				else if (index != j) {
-					(*board)[i][index] = (*board)[i][j];
-					(*board)[i][j] = 0;
-					
-				}
-				index--;
 			}
 		}
 	}
@@ -238,12 +214,36 @@ void Game2048::moveUp(int*** board, int size, int* score, int* freeTiles) {
 					(*freeTiles)++;
 					index--;
 				}
-				else if (index != j) {
-					(*board)[j][index] = (*board)[i][j];
+				else if (index != i) {
+					(*board)[index][j] = (*board)[i][j];
 					(*board)[i][j] = 0;
 					
 				}
 				index++;
+			}
+		}
+	}
+}
+
+void Game2048::moveRight(int*** board, int size, int *score, int *freeTiles) {
+	int index;
+	for (int i = size - 1; i >= 0; i--) {
+		index = size - 1;
+		for (int j = size - 1; j >= 0; j--) {
+			if ((*board)[i][j] != 0) {
+				if (index + 1 < size && (*board)[i][j] == (*board)[i][index + 1]) {
+					*score = *score + (*board)[i][index + 1] * 2;
+					(*board)[i][index + 1] *= 2;
+					(*board)[i][j] = 0;
+					(*freeTiles)++;
+					index++;
+				}
+				else if (index != j) {
+					(*board)[i][index] = (*board)[i][j];
+					(*board)[i][j] = 0;
+
+				}
+				index--;
 			}
 		}
 	}
@@ -262,8 +262,8 @@ void Game2048::moveDown(int*** board, int size, int* score, int* freeTiles) {
 					(*freeTiles)++;
 					index++;
 				}
-				else if (index != j) {
-					(*board)[j][index] = (*board)[i][j];
+				else if (index != i) {
+					(*board)[index][j] = (*board)[i][j];
 					(*board)[i][j] = 0;
 					
 				}

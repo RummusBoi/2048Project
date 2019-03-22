@@ -47,6 +47,7 @@ int main () {
 				Game2048::searchDepth = 0;
 				input = ai.generateMove(&board, freeTiles);
 				Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 1);
+				Game2048::printBoard(&board, gameSize);
 				if (freeTiles == 0) {
 					gameLost = true;
 					break;
@@ -64,6 +65,7 @@ int main () {
 			while (!gameLost) {
 				int input;
 				Game2048::getMove(&input);
+				cout << "registered " << input << endl;
 				Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 1);
 				if (freeTiles == 0) {
 					gameLost = true;
