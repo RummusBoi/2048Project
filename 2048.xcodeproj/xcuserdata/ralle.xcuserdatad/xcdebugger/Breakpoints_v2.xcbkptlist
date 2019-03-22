@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "573042599.076176"
+            timestampString = "574696477.684417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "40"
@@ -27,7 +27,7 @@
             condition = "step==10"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "573042599.076297"
+            timestampString = "574696477.684552"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
@@ -43,7 +43,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "573042599.076365"
+            timestampString = "574696477.684656"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "57"
@@ -91,12 +91,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "573036129.861226"
+            timestampString = "574696477.684736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "Node::generateRemainingMoves()"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "Node::nodeSimulate()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -107,7 +107,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "573042599.076448"
+            timestampString = "574696477.684819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
@@ -123,7 +123,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "573042599.076504"
+            timestampString = "574696477.684906"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "43"
@@ -140,12 +140,12 @@
             condition = "size &lt; 0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "573036129.8617409"
+            timestampString = "574696477.684992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "Node::generateRemainingMoves()"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "Node::nodeSimulate()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -156,7 +156,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "573042599.076576"
+            timestampString = "574696477.685092"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
@@ -172,13 +172,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "573036129.86202"
+            timestampString = "574696477.685176"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "Node::nodeSimulate()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -188,13 +188,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/Node.cpp"
-            timestampString = "573036129.8620729"
+            timestampString = "574696477.685253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
-            landmarkName = "Node::collectLeafNodes(std::vector&lt;Node*&gt;* leafNodes, int turn)"
-            landmarkType = "7">
+            startingLineNumber = "253"
+            endingLineNumber = "253">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -236,7 +234,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "2048/AI.cpp"
-            timestampString = "573042599.076653"
+            timestampString = "574696477.68533"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "15"

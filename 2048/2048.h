@@ -27,6 +27,9 @@ private:
 	bool gameLost;
 	
 	static void moveLeft(int*** board, int size, int* score, int* freeTiles);
+	static void moveRight(int*** board, int size, int* score, int* freeTiles);
+	static void moveDown(int*** board, int size, int* score, int* freeTiles);
+	static void moveUp(int*** board, int size, int* score, int* freeTiles);
 	static void rotateCW(int*** board, int size);
 	static void rotateCCW(int*** board, int size);
 };

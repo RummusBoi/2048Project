@@ -6,8 +6,10 @@
 #include <string>
 #include <cmath>
 #include "2048.h"
-#include <Windows.h>
-
+#ifndef __APPLE__
+	#include <Windows.h>
+#define OPERATINGSYSTEM 1
+#endif
 int Game2048::searchDepth = 0;
 bool Game2048::lkey = false;
 bool Game2048::rkey = false;
@@ -17,10 +19,11 @@ bool Game2048::dkey = false;
 
 using namespace std;
 
+
 Game2048::Game2048(int size) {
 }
 
-
+#ifndef __APPLE__
 void Game2048::getMove(int* move) {
 	bool foundkey = false;
 
@@ -63,7 +66,10 @@ void Game2048::getMove(int* move) {
 		else ukey = false;
 	}
 }
-
+#endif
+#ifdef __APPLE__
+void Game2048::getMove(int* move) {}
+#endif	
 char Game2048::charFromMove(int move) {
 	switch (move) {
 		case 1:
@@ -75,7 +81,7 @@ char Game2048::charFromMove(int move) {
 		case 4:
 			return 'u';
 		default:
-			exit(20);
+			exit(-1);
 	}
 }
 
@@ -146,31 +152,23 @@ void Game2048::executeMove(int*** board, int size, int move, int* score, int* fr
 		switch (move)
 		{
 		case 1:
-			rotateCW(board, size);
-			rotateCW(board, size);
-			moveLeft(board, size, score, freeTiles);
-			rotateCW(board, size);
-			rotateCW(board, size);
+			moveRight(board, size, score, freeTiles);
 			break;
 		case 2:
 			moveLeft(board, size, score, freeTiles);
 			break;
 		case 3:
-			rotateCCW(board, size);
-			moveLeft(board, size, score, freeTiles);
-			rotateCW(board, size);
+			moveUp(board, size, score, freeTiles);
 			break;
 		case 4:
-			rotateCW(board, size);
-			moveLeft(board, size, score, freeTiles);
-			rotateCCW(board, size);
+			moveDown(board, size, score, freeTiles);
 			break;
 		default:
 			break;
 		}
 	}
 	else {
-		if (move < 0 || move >= 32) exit(19);
+		if (move < 0 || move > 32) {cout << move; throw new exception();}
 
 		int tile = move < 16 ? 2 : 4;
 		move = move % 16;
@@ -198,6 +196,78 @@ void Game2048::moveLeft(int*** board, int size, int* score, int* freeTiles) {
 					
 				}
 				index++;
+			}
+		}
+	}
+}
+
+void Game2048::moveRight(int*** board, int size, int *score, int *freeTiles) {
+	int index;
+	for (int i = size - 1; i >= 0; i--) {
+		index = size - 1;
+		for (int j = size - 1; j >= 0; j--) {
+			if ((*board)[i][j] != 0) {
+				if (index + 1 >= 0 && (*board)[i][j] == (*board)[i][index + 1]) {
+					*score = *score + (*board)[i][index + 1] * 2;
+					(*board)[i][index + 1] *= 2;
+					(*board)[i][j] = 0;
+					(*freeTiles)++;
+					index++;
+				}
+				else if (index != j) {
+					(*board)[i][index] = (*board)[i][j];
+					(*board)[i][j] = 0;
+					
+				}
+				index--;
+			}
+		}
+	}
+}
+
+void Game2048::moveUp(int*** board, int size, int* score, int* freeTiles) {
+	int index;
+	for (int j = 0; j < size; j++) {
+		index = 0;
+		for (int i = 0; i < size; i++) {
+			if ((*board)[i][j] != 0) {
+				if (index - 1 >= 0 && (*board)[i][j] == (*board)[index - 1][j]) {
+					*score = *score + (*board)[index - 1][j] * 2;
+					(*board)[index - 1][j] *= 2;
+					(*board)[i][j] = 0;
+					(*freeTiles)++;
+					index--;
+				}
+				else if (index != j) {
+					(*board)[j][index] = (*board)[i][j];
+					(*board)[i][j] = 0;
+					
+				}
+				index++;
+			}
+		}
+	}
+}
+
+void Game2048::moveDown(int*** board, int size, int* score, int* freeTiles) {
+	int index;
+	for (int j = size - 1; j >= 0; j--) {
+		index = size - 1;
+		for (int i = size - 1; i >= 0; i--) {
+			if ((*board)[i][j] != 0) {
+				if (index + 1 < size && (*board)[i][j] == (*board)[index + 1][j]) {
+					*score = *score + (*board)[index + 1][j] * 2;
+					(*board)[index + 1][j] *= 2;
+					(*board)[i][j] = 0;
+					(*freeTiles)++;
+					index++;
+				}
+				else if (index != j) {
+					(*board)[j][index] = (*board)[i][j];
+					(*board)[i][j] = 0;
+					
+				}
+				index--;
 			}
 		}
 	}

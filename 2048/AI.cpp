@@ -24,15 +24,15 @@ int AI::generateMove(int*** board, int freeTiles) {
 	}
 	cout << root.getScore() << " : " << root.getAccScore() << endl;
 	//first turn is given to computer, as the ai already has created 4 nodes.
-	for (int step = 1; step < 100; step++) {
+	for (int step = 1; step < 300; step++) {
 		int player = step % 2;
-		for (int i = 0; i < (player == 1 ? 4 : 1); i++) {
+		for (int i = 0; i < (player == 1 ? 2 : 1); i++) {
 			Node* newNode = new Node((int)((player + 1) % 2));
 
 			Node* selectedNode = nodeSelect(&root, player);
 
-			if (selectedNode == NULL) return 0;
-
+			if (!selectedNode) return 0;
+ 
 			// ---
 			//expand selected node:
 
@@ -78,7 +78,11 @@ int AI::generateMove(int*** board, int freeTiles) {
 
 	cout << endl;
 	Game2048::printBoard(board, size);
-
+	//1 works
+	//2 works
+	//3 is messed up
+	//4 doesnt do anything
+	return 4;
 	return hiVal.getMove();
 }
 

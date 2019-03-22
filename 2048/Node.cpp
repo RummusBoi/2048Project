@@ -62,9 +62,6 @@ void Node::rootSetupRemMoves() {
 			cmpBoard[i][j] = board[i][j];
 		}
 	}
-	
-	cout << "Before: " << endl;
-	printBoard();
 
 	int freeTiles = 16;
 	int score = 0;
@@ -83,8 +80,6 @@ void Node::rootSetupRemMoves() {
 		
 		
 	}
-	cout << "After: " << endl;
-	printBoard();
 
 	nodeDepth = 0;
 }
@@ -139,8 +134,9 @@ int Node::nodeSimulate() {
 		Game2048::executeMove(&simBoard, size, simMove, &tmpScore, &tmpFreeTiles, (tmpTurn+1)%2);
 
 		tmpTurn++;
+		if (tmpTurn >= 200) done = true;
+		
 	}
-
 	return tmpScore + baseScore;
 }
 
