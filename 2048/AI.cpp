@@ -1,6 +1,7 @@
 #include "AI.h"
 #include "2048.h"
 #include <iostream>
+#include <thread>
 
 using namespace std;
 
@@ -8,48 +9,53 @@ AI::AI(int size) {
 	this->size = size;
 }
 
-int AI::generateMove(int*** board, int freeTiles) {
+void AI::generateOutcome(Node* root, int iterations) {
+	for (int i = 0; i < iterations; i++) {
+
+		if ((*root).getChildren()->size() == 0) break;
+
+		Node* selectedNode = (*root).getChild(rand() % (*root).getChildren()->size());
+		int outcome = selectedNode->nodeSimulate();
+
+		nodeBackpropagate(selectedNode, outcome, 0);
+		
+
+		
+	}
+}
+
+void AI::generateMove(int*** board, int freeTiles, int* output, const int threads) {
 	Node root(0);
 	root.setBoard(board, size);
 	root.rootSetupRemMoves();
 	
+
 	//Create 4 children for the root:
 	int remSize = (int)root.getRemainingMoves()->size();
 	for (int i = 0; i < remSize; i++) {
 		Node* newNode = new Node (1);
 		root.addChild(newNode);
-		
-		cout << newNode->getScore() << endl;
+		//cout << newNode->getScore() << endl;
 		nodeBackpropagate(newNode, newNode->nodeSimulate(), 0);
 	}
-	cout << root.getScore() << " : " << root.getAccScore() << endl;
 	//first turn is given to computer, as the ai already has created 4 nodes.
-	for (int step = 1; step < 600; step++) {
-		int player = step % 2;
-		for (int i = 0; i < (player == 1 ? 2 : 1); i++) {
-			Node* newNode = new Node((int)((player + 1) % 2));
 
-			Node* selectedNode = nodeSelect(&root, player);
+	thread* threadarr = new thread[threads];
 
-			if (!selectedNode) return 0;
- 
-			// ---
-			//expand selected node:
+	for (int i = 0; i < threads; i++) {
+		threadarr[i] = thread(&AI::generateOutcome, this, &root, 5000);
+	}
 
-			(*selectedNode).addChild(newNode);
-			// ---
-			//simulate game from newNode:
-			int outcome = newNode->nodeSimulate();
-			//backpropagate outcome through tree
-			nodeBackpropagate(newNode, outcome, player);
-		}
-		
+
+	for (int i = 0; i < threads; i++) {
+		threadarr[i].join();
 	}
 	
+
 	Node hiVal = *(root.getChild(0));
 	double hiScore = (double)hiVal.getAccScore() / (double)hiVal.getSimulations();
 
-	cout << "Confidence: " << endl << endl;
+	//cout << "Confidence: " << endl << endl;
 	
 	int totalScore = 0;
 
@@ -62,8 +68,8 @@ int AI::generateMove(int*** board, int freeTiles) {
 		}
 	}
 
-	
-
+	// Prints out important information about the selection
+	/*
 	for (Node* node : *(root.getChildren())) {
 		char move = Game2048::charFromMove(node->getMove());
 		cout << "NODE " << move << ": " << endl << "AccScore: " << node->getAccScore() << endl << "BaseScore: " << node->getScore() << endl <<
@@ -71,6 +77,7 @@ int AI::generateMove(int*** board, int freeTiles) {
 		cout << Game2048::charFromMove(node->getMove()) << " : " << 100. * double((*node).getAccScore()) / double((*node).getSimulations()) / double(totalScore) << endl;
 		cout << endl;
 	}
+	*/
 
 	cout << "-- selected " << Game2048::charFromMove(hiVal.getMove()) << endl;
 
@@ -79,9 +86,9 @@ int AI::generateMove(int*** board, int freeTiles) {
 	cout << endl;
 	//1 works
 	//2 works
-	//3 is messed up
-	//4 doesnt do anything
-	return hiVal.getMove();
+	//3 works
+	//4 works
+	*output = hiVal.getMove();
 }
 
 Node* AI::nodeSelect(Node* root, int player) {

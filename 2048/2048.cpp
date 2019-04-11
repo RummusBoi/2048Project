@@ -106,8 +106,8 @@ void Game2048::generateRandomTile(int*** board, int size, int* score, int* freeT
 	while (!finished) {
 		n = rand() % (size*size);
 		//cout << "x: " << n%4 << "y:" << (int)floor((double)n / 4.) << endl;
-		if ((*board)[n % 4][(int)floor((double)n / 4.)] == 0) {
-			(*board)[n % 4][(int)floor((double)n / 4.)] = rand() % 100 < 10 ? 4 : 2;
+		if ((*board)[n % size][(int)floor((double)n / size)] == 0) {
+			(*board)[n % size][(int)floor((double)n / size)] = rand() % 100 < 10 ? 4 : 2;
 			finished = true;
 		}
 	}
@@ -139,8 +139,8 @@ void Game2048::generateRemainingMovesFromBoard(int*** board, int size, int turn,
 			if ((*board)[i][j] == 0) {
 				(*freeTiles)++;
 				if (turn % 2 == 1) {
-					(*remainingMoves).push_back(i + 4 * j);
-					(*remainingMoves).push_back(i + 4 * j + 16);
+					(*remainingMoves).push_back(i + size * j);
+					(*remainingMoves).push_back(i + size * j + size*size);
 				}
 			}
 		}
@@ -168,11 +168,11 @@ void Game2048::executeMove(int*** board, int size, int move, int* score, int* fr
 		}
 	}
 	else {
-		if (move < 0 || move > 32) {cout << move; throw new exception();}
+		if (move < 0 || move > 2*size*size) {cout << move; throw new exception();}
 
-		int tile = move < 16 ? 2 : 4;
-		move = move % 16;
-		(*board)[move % 4][int(floor(move / 4))] = tile;
+		int tile = move < size*size ? 2 : 4;
+		move = move % (size*size);
+		(*board)[move % size][int(floor(move / size))] = tile;
 		(*freeTiles) -= 1;
 	}
 }

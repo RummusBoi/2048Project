@@ -63,7 +63,7 @@ void Node::rootSetupRemMoves() {
 		}
 	}
 
-	int freeTiles = 16;
+	int freeTiles = size*size;
 	int score = 0;
 	
 	for (int move = 1; move <= 4; move ++) {
@@ -110,6 +110,8 @@ int Node::nodeSimulate() {
 		}
 	}
 
+
+
 	int tmpTurn = (turn+1)%2;
 	int tmpScore = 0;
 	int tmpFreeTiles = freeTiles;
@@ -132,11 +134,17 @@ int Node::nodeSimulate() {
 		Game2048::generateRemainingMovesFromBoard(&simBoard, size, tmpTurn, &tmpFreeTiles, &tmpRemainingMoves);
 		int simMove = tmpRemainingMoves[rand() % tmpRemainingMoves.size()];
 		Game2048::executeMove(&simBoard, size, simMove, &tmpScore, &tmpFreeTiles, (tmpTurn+1)%2);
-
+		
 		tmpTurn++;
-		if (tmpTurn >= 200) done = true;
+		
 		
 	}
+
+	for (int i = 0; i < size; i++) {
+		free(simBoard[i]);
+	}
+	free(simBoard);
+
 	return tmpScore + baseScore;
 }
 

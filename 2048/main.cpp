@@ -4,17 +4,17 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <time.h>
-
-#ifdef _WIN64
-#define WINPAUSE system("pause")
-#endif
+#include <thread>
 
 using namespace std;
 
+void hello(int output) { cout << output << endl; }
+
 int main () {
 
-	
-	
+	thread test(hello, 2);
+	test.join();
+
 	int gameSize;
 	int** board;
 	bool gameLost;
@@ -26,7 +26,7 @@ int main () {
 	gameSize = 4;
 	
 	int totalScore = 0;
-	int iterations = 2;
+	int iterations = 1;
 	
 	for (int i = 0; i < iterations; i++) {
 		gameLost = false;
@@ -43,9 +43,16 @@ int main () {
 		if (input == "y") {
 			AI ai(gameSize);
 			while (!gameLost) {
+				cout << "loop" << endl;
 				int input;
 				Game2048::searchDepth = 0;
-				input = ai.generateMove(&board, freeTiles);
+
+				thread generatingMove(&AI::generateMove, &ai, &board, freeTiles, &input, 6);
+				
+				generatingMove.join();
+				
+				cout << "generated move" << endl;
+
 				Game2048::executeMove(&board, gameSize, input, &score, &freeTiles, 1);
 				Game2048::printBoard(&board, gameSize);
 				if (freeTiles == 0) {
